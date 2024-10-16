@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+    </ul>
+    <button onclick="addNode()">Add</button>
+
+    <!--script-->
+    <script>
+        const $ = document.querySelector.bind(document);
+        const $$ = document.querySelectorAll.bind(document);
+        function addNode () {
+            const ul = $('ul');
+            const listLi = $$('li')
+            const childLi = Number(listLi[listLi.length - 1].textContent)
+            const newLi = document.createElement('li');
+            const count = document.createTextNode(childLi + 1)
+            newLi.appendChild(count)
+            ul.appendChild(newLi)
+        }
+    </script>
+</body>
+</html>
