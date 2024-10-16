@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="ul1">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+
+    <ul id="ul2">
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+    </ul>
+
+    <ul id="ul3"></ul>
+
+    <button onclick="copyNode()">Coppy</button>
+    <!--script-->
+    <script>
+        const $ = document.querySelector.bind(document);
+        const $$ = document.querySelectorAll.bind(document);
+        function copyNode() {
+            const ul1 = $('#ul1');
+            const ul2 = $('#ul2');
+            const ul3 = $('#ul3');
+
+            const liUL1 = ul1.children;
+            const liUL2 = ul2.children;
+
+            for (let i = 0; i < liUL1.length; i++) {
+                for (j = 0; j < liUL2.length; j++) {
+                    if (liUL1[i].textContent == liUL2[j].textContent) {
+                        const li = document.createElement('li')
+                        li.textContent = liUL1[i].textContent;
+                        ul3.appendChild(li);
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <section class="flex flex-col items-center pt-6">
+        <div
+            class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1
+                    class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
+                    SignUp</h1>
+                <form class="space-y-4 md:space-y-6" method="POST" onsubmit="return validate()">
+                    <div>
+                        <label for="fullname"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fullname</label>
+                        <input type="text" name="fullname" id="fullname"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Emelia Erickson">
+                    </div>
+                    <div>
+                        <label for="username"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                        <input type="text" name="username" id="username"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Emelia Erickson">
+                        <p id="username-error" class="text-red-500 text-sm mt-1"></p> <!-- Thêm thẻ này -->
+                    </div>
+                    <div>
+                        <label for="email"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                        <input type="text" name="email" id="email"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="emelia_erickson24">
+                        <p id="email-error" class="text-red-500 text-sm mt-1"></p> <!-- Thêm thẻ này -->
+                    </div>
+                    <div>
+                        <label for="password"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                        <input type="password" name="password" id="password" placeholder="••••••••"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <p id="password-error" class="text-red-500 text-sm mt-1"></p> <!-- Thêm thẻ này -->
+                    </div>
+                    <button type="submit"
+                        class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create
+                        an account</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const $ = document.querySelector.bind(document);
+        const $$ = document.querySelectorAll.bind(document);
+
+        // element
+        const formElement = $("form");
+        const inputUsername = $("#username");
+        const inputEmail = $("#email");
+        const inputPassword = $("#password");
+        const usernameError = $("#username-error");
+        const emailError = $("#email-error");
+        const passwordError = $("#password-error");
+
+        function validate() {
+            let isValid = true;
+
+            const usernameValue = inputUsername.value.trim();
+            const emailValue = inputEmail.value.trim();
+            const passwordValue = inputPassword.value.trim();
+
+            // xóa error
+            usernameError.textContent = "";
+            emailError.textContent = "";
+            passwordError.textContent = "";
+
+            // Check rỗng
+            if (usernameValue.length === 0) {
+                usernameError.textContent = "Username không được để trống";
+                isValid = false;
+            }
+            if (emailValue.length === 0) {
+                emailError.textContent = "Email không được để trống";
+                isValid = false;
+            }
+            if (passwordValue.length === 0) {
+                passwordError.textContent = "Password không được để trống";
+                isValid = false;
+            }
+
+            // Check chiều dài username
+            if (usernameValue.length < 5 || usernameValue.length > 10) {
+                usernameError.textContent = "Username phải từ 5 đến 10 ký tự";
+                isValid = false;
+            }
+
+            // Check chiều dài password
+            if (passwordValue.length < 5 || passwordValue.length > 10) {
+                passwordError.textContent = "Password phải từ 5 đến 10 ký tự";
+                isValid = false;
+            }
+
+            // Check email
+            const regex = /\S+@\S+/;
+            if (!regex.test(emailValue)) {
+                emailError.textContent = "Email chưa đúng định dạng";
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        if (formElement) {
+            formElement.onsubmit = function (e) {
+                if (!validate()) {
+                    e.preventDefault();
+                }
+            };
+        }
+
+    </script>
+
+</body>
+
+</html>
