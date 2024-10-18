@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="max-w-screen-lg mx-auto flex items-center justify-center h-[100vh]">
+        <div class="flex items-center justify-center w-[700px] h-full">
+            <label for="dropzone-file" id="dropzone"
+                class=" w-full min-h-64 z-10 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 ">
+                <!-- <div class="flex justify-center items-center h-full flex-col">
+                    <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                    </svg>
+                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to
+                            upload</span> or drag and drop</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                </div> -->
+                <div class="image_list flex items-center flex-wrap gap-[20px] z-20">
+                </div>
+            </label>
+            <input id="dropzone-file" multiple type="file" class="hidden" />
+        </div>
+    </div>
+    <script>
+        const $ = document.querySelector.bind(document);
+        const $$ = document.querySelectorAll.bind(document);
+
+        const files = $("#dropzone-file");
+        const imgList = $(".image_list");
+        const dropZone = $("#dropzone")
+
+        function handleFiles(files) {
+            for (let i = 0; i < files.length; i++) {
+                const fileURL = URL.createObjectURL(files[i]);
+                const htmls = `
+                <div class="relative inline-block">
+                        <img src="${fileURL}" alt="Image" class="w-16 h-16 object-cover mb-4" />
+                        <button class="absolute z-[100] top-0 right-0 bg-red-500 text-white rounded-full p-1 hover:bg-red-700 remove-button">
+                            &times; 
+                        </button>
+                    </div>
+                `
+                imgList.innerHTML += htmls;
+            }
+            const removeButtons = $$('.remove-button');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    removeImg(event, button);
+                });
+            });
+        }
+
+        files.addEventListener("change", (e) => {
+            const images = event.target.files;
+            handleFiles(images)
+        })
+
+
+        // drop & draw
+        dropZone.addEventListener("dragover", (e) => {
+            e.preventDefault()
+            dropZone.classList.add("bg-gray-300");
+        })
+
+        dropZone.addEventListener("dragleave", (e) => {
+            e.preventDefault()
+            dropZone.classList.remove("bg-gray-300");
+        })
+
+        dropZone.addEventListener("drop", (e) => {
+            e.preventDefault()
+            dropZone.classList.remove("bg-gray-300");
+            const files = e.dataTransfer.files;
+            handleFiles(files)
+        })
+
+        // Hàm xóa
+        function removeImg(event, btn) {
+            event.preventDefault();
+            event.stopPropagation();
+            const imgContainer = btn.parentElement;
+            imgContainer.remove();
+        }
+
+    </script>
+</body>
+
+</html>
