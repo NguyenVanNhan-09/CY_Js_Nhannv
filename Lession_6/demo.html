@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music app</title>
+    <link rel="stylesheet" href="./assets/css/demo.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="player">
+        <header>
+            <div class="header__icon">
+                <img src="./assets/images/menu.svg" alt="">
+            </div>
+            <div class="header__heading">“Top 100 ”</div>
+        </header>
+        <div class="cd">
+            <div class="cd-thumb" style="background-image: url('https://i.ytimg.com/vi/jTLhQf5KJSc/maxresdefault.jpg')">
+            </div>
+        </div>
+        <div class="infor">
+            <div>
+                <h5>Noi nay co anh</h5>
+                <h4>Son Tung MTP</h4>
+            </div>
+            <img src="./assets/images/heart.svg" alt="">
+        </div>
+        <div class="progress">
+            <div class="progress__time-song">
+                <span class="progress__time-playing">0:00</span>
+                <span class="progress__total-time">-0:45</span>
+            </div>
+            <!-- <input id="progress" class="progress__input" type="range" value="0" step="1" min="0" max="100"> -->
+            <div class="progress-bar">
+                <div class="progress___range"></div>
+            </div>
+            <audio id="audio" src=""></audio>
+        </div>
+        <div class="control">
+            <div class="btn btn-repeat">
+                <i class="fas fa-redo"></i>
+            </div>
+            <div class="btn btn-prev">
+                <i class="fas fa-step-backward"></i>
+            </div>
+            <div class="btn btn-toggle-play">
+                <i class="fas fa-pause icon-pause"></i>
+                <i class="fas fa-play icon-play"></i>
+            </div>
+            <div class="btn btn-next">
+                <i class="fas fa-step-forward"></i>
+            </div>
+            <div class="btn btn-random">
+                <i class="fas fa-random"></i>
+            </div>
+        </div>
+        <!-- Playlist -->
+        <div class="playlist">
+
+        </div>
+    </div>
+    <script src="./assets/js/demo.js"></script>
+</body>
+
+</html>
