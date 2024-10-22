@@ -33,18 +33,21 @@
                     <div class="relative p-4 bg-white rounded-lg shadow  sm:p-5">
                         <!-- Modal header -->
                         <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 ">
-                            <h3 class="text-lg font-semibold text-gray-900">
-                                Add Note
-                            </h3>
-                            <button type="button" id="btn-close"
-                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
-                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                            </button>
+                            <<<<<<< Updated upstream <h3 class="text-lg font-semibold text-gray-900">
+                                =======
+                                <h3 id="modal-title" class="text-lg font-semibold text-gray-900">
+                                    >>>>>>> Stashed changes
+                                    Add Note
+                                </h3>
+                                <button type="button" id="btn-close"
+                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                </button>
                         </div>
                         <!-- Modal body -->
                         <form action="#" id="modal__form">
@@ -64,7 +67,8 @@
                                         placeholder="Write product description here"></textarea>
                                 </div>
                             </div>
-                            <button type="submit"
+
+                            <button id="modal-submit-text" type="submit"
                                 class="text-black inline-flex items-center bg-blue-300 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
                                 <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -94,7 +98,16 @@
         const inputDescription = $("#description")
         const noteList = $("#note__list")
 
+        const modalTitle = $("#modal-title");
+        const modalSubmitText = $("#modal-submit-text");
+
+        let isEditing = false;
+        let currentEditId = null;
+
         btnModal.addEventListener("click", () => {
+            isEditing = false;
+            modalTitle.textContent = "Add Note";
+            modalSubmitText.textContent = "Add Note";
             modal.classList.remove("hidden")
             overlay.classList.remove("hidden")
         })
@@ -113,13 +126,28 @@
             e.preventDefault()
             const title = inputTitle.value
             const description = inputDescription.value
-            const newNote = {
-                "title": title,
-                "description": description
-            }
+
+            const timeDate = new Date();
+            const day = timeDate.getDate();
+            const month = timeDate.getMonth()
+            const year = timeDate.getFullYear()
 
             const arrNote = getNotes();
-            arrNote.push(newNote)
+
+            if (isEditing) {
+                const noteIndex = arrNote.findIndex(note => note.id === currentEditId);
+                arrNote[noteIndex].title = title;
+                arrNote[noteIndex].description = description;
+            } else {
+                const newNote = {
+                    id: arrNote.length > 0 ? arrNote[arrNote.length - 1].id + 1 : 1,
+                    title: title,
+                    description: description,
+                    time: `${day}/${month + 1}/${year}`
+                }
+                arrNote.push(newNote)
+            }
+
             localStorage.setItem("arrNote", JSON.stringify(arrNote))
             inputTitle.value = ""
             inputDescription.value = ""
@@ -132,62 +160,86 @@
             noteList.innerHTML = "";
             const storedArrayNote = getNotes();
             if (storedArrayNote) {
-                storedArrayNote.forEach((item, index) => {
+
+                storedArrayNote.forEach((item) => {
                     const htmls = `
-                        <div key-data=${index} id="note-item"
-                            class="w-full h-64 flex flex-col justify-between dark:bg-gray-800 bg-white dark:border-gray-700 rounded-lg border border-gray-400 mb-6 py-5 px-4">
+                        < div id = "note-item"
+                    class="w-full h-64 flex flex-col justify-between  rounded-lg border border-gray-400 mb-6 py-5 px-4" >
                             <div>
-                                <h4 class="text-gray-800 dark:text-gray-100 font-bold mb-3">${item.title}
+                                <h4 class="text-gray-800 text-3xl font-bold mb-3">${item.title}
                                 </h4>
-                                <p class="text-gray-800 dark:text-gray-100 text-sm">${item.description}</p>
+                                <p class="text-gray-800 text-sm">${item.description}</p>
                             </div>
                             <div>
-                                <div class="flex items-center justify-between text-gray-800 dark:text-gray-100">
-                                    <p class="text-sm">March 28, 2020</p>
+                                <div class="flex items-center justify-between text-gray-800">
+                                    <p class="text-sm">${item.time}</p>
                                     <div class="flex gap-2">
                                         <button
-                                            class="w-8 h-8 rounded-full bg-gray-800 dark:bg-gray-100 dark:text-gray-800 text-white flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-black"
+                                            data-id=${item.id}
+                                            class="btn__edit w-8 h-8 rounded-full bg-gray-800 text-white flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-black"
                                             aria-label="edit note" role="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                class="icon icon-tabler icon-tabler-pencil" width="20" height="20"
-                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                                stroke-linecap="round" stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z"></path>
-                                                <path fill="#097eff"
-                                                    d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4"></path>
-                                                <line x1="13.5" y1="6.5" x2="17.5" y2="10.5"></line>
-                                            </svg>
-
+                                             <img src="./icon/ti-edit.svg" alt="">
                                         </button>
                                         <button
-                                            class="w-8 h-8 rounded-full bg-gray-800 dark:bg-gray-100 dark:text-gray-800 text-white flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-black"
-                                            aria-label="edit note" role="button">
-                                            <svg fill="#000000" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                viewBox="0 0 52 52" enable-background="new 0 0 52 52" xml:space="preserve">
-                                                <g>
-                                                    <path fill="#ff0000"
-                                                        d="M45.5,10H33V6c0-2.2-1.8-4-4-4h-6c-2.2,0-4,1.8-4,4v4H6.5C5.7,10,5,10.7,5,11.5v3C5,15.3,5.7,16,6.5,16h39
-                                                    c0.8,0,1.5-0.7,1.5-1.5v-3C47,10.7,46.3,10,45.5,10z M23,7c0-0.6,0.4-1,1-1h4c0.6,0,1,0.4,1,1v3h-6V7z" />
-                                                    <path fill="#ff0000" d="M41.5,20h-31C9.7,20,9,20.7,9,21.5V45c0,2.8,2.2,5,5,5h24c2.8,0,5-2.2,5-5V21.5C43,20.7,42.3,20,41.5,20z
-                                                    M23,42c0,0.6-0.4,1-1,1h-2c-0.6,0-1-0.4-1-1V28c0-0.6,0.4-1,1-1h2c0.6,0,1,0.4,1,1V42z M33,42c0,0.6-0.4,1-1,1h-2
-                                                    c-0.6,0-1-0.4-1-1V28c0-0.6,0.4-1,1-1h2c0.6,0,1,0.4,1,1V42z" />
-                                                </g>
-                                            </svg>
+                                            class="btn__delete w-8 h-8 rounded-full bg-gray-800 text-white flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-black"
+                                            aria-label="edit note" role="button" data-id=${item.id}>
+                                           <img src="./icon/ti-delete.svg" alt="">
                                         </button>
                                     </div>
-
                                 </div>
                             </div>
-                        </div>
+                        </div >
                     `;
                     noteList.innerHTML += htmls;
                 })
 
             }
+            setupNoteActions()
+        }
+
+        // setup
+        function setupNoteActions() {
+            const deleteBtns = $$(".btn__delete");
+            const editButtons = $$(".btn__edit");
+
+            deleteBtns.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    deleteNote(btn)
+                })
+            })
+
+            editButtons.forEach((btn) => {
+                btn.addEventListener("click", (e) => {
+                    const noteId = parseInt(e.target.closest('button').getAttribute("data-id"))
+                    editNote(noteId)
+                })
+            })
+        }
+
+        // Hàm sửa ghi chú
+        function editNote(noteId) {
+            const arrNote = getNotes();
+            const noteToEdit = arrNote.find(note => note.id === noteId);
+            if (noteToEdit) {
+                modalTitle.textContent = "Edit Note";
+                modalSubmitText.textContent = "Update Note";
+                isEditing = true;
+                currentEditId = noteId;
+                inputTitle.value = noteToEdit.title;
+                inputDescription.value = noteToEdit.description;
+                modal.classList.remove("hidden");
+                overlay.classList.remove("hidden");
+            }
         }
 
         // Hàm xóa ghi chú
-        function deleteNote(index) {
+
+        function deleteNote(btn) {
+            const noteId = Number(btn.getAttribute("data-id"));
+            const storedArrayNote = getNotes();
+            const updatedArrayNote = storedArrayNote.filter(note => note.id !== noteId);
+            localStorage.setItem('arrNote', JSON.stringify(updatedArrayNote));
+            renderNote();
         }
         renderNote()
     </script>
