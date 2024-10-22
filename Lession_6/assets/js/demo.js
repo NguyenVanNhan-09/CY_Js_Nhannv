@@ -103,19 +103,43 @@ const app = {
          }
       };
 
-      progressBar.addEventListener("click", (e) => {
-         const clickX = e.pageX - progress.offsetLeft;
-         const newProgress = (clickX / progress.offsetWidth) * 100;
-         progress.style.width = `${newProgress}%`;
-      });
+      // progressBar.addEventListener("click", (e) => {
+      //    // Lấy chiều rộng của thanh
+      //    const width = progressBar.clientWidth;
+      //    // Vị trí click trên thanh
+      //    const clickX = e.offsetX;
+      //    const duration = audio.duration;
+      //    audio.currentTime = (clickX / width) * duration;
+      // });
 
-      progressBar.addEventListener("click", (e) => {
-         // Lấy chiều rộng của thanh
+      // Hàm xử lý khi kéo
+      function setProgress(e) {
          const width = progressBar.clientWidth;
-         // Vị trí click trên thanh
          const clickX = e.offsetX;
          const duration = audio.duration;
          audio.currentTime = (clickX / width) * duration;
+      }
+      // Xử lý bắt đầu kéo
+      progressBar.addEventListener("mousedown", (e) => {
+         isDragging = true;
+         setProgress(e);
+      });
+
+      // Xử lý khi kéo
+      progressBar.addEventListener("mousemove", (e) => {
+         if (isDragging) {
+            setProgress(e);
+         }
+      });
+
+      // Xử lý khi kết thúc kéo
+      document.addEventListener("mouseup", () => {
+         isDragging = false;
+      });
+
+      // Xử lý khi rời chuột ra ngoài mà không nhả
+      progressBar.addEventListener("mouseleave", () => {
+         isDragging = false;
       });
 
       //   khi click vào playlist
