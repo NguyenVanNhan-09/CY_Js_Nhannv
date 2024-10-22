@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div>
+        <h1
+            class="mb-4 text-4xl uppercase mt-6 font-extrabold text-center leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
+            máy tính bỏ túi</h1>
+        <div class="w-full max-w-xl mx-auto mt-4">
+            <div class="flex flex-col items-center justify-between">
+                <div class="w-full max-w-xs min-w-[200px] mt-4">
+                    <label class="block mb-1 text-sm text-slate-600">
+                        Số 1
+                    </label>
+                    <div class="relative mt-2">
+                        <input type="number" id="num1"
+                            class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-20 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                            placeholder="Số 1..." />
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-center mt-6">
+                    <button id="reverseValue" onclick="reverseValue()"
+                        class="rounded-full border border-slate-300 p-2.5 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+                            <path fill-rule="evenodd"
+                                d="M13.78 10.47a.75.75 0 0 1 0 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 1 1 1.06-1.06l.97.97V5.75a.75.75 0 0 1 1.5 0v5.69l.97-.97a.75.75 0 0 1 1.06 0ZM2.22 5.53a.75.75 0 0 1 0-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1-1.06 1.06l-.97-.97v5.69a.75.75 0 0 1-1.5 0V4.56l-.97.97a.75.75 0 0 1-1.06 0Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="w-full max-w-xs min-w-[200px] -mt-2">
+                    <label class="block mb-1 text-sm text-slate-600">
+                        Số 2
+                    </label>
+                    <div class="relative mt-2">
+                        <input type="number" id="num2"
+                            class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-20 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                            placeholder="Số 2..." />
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-center mt-6">
+                    <button
+                        class="rounded-full border border-slate-300 p-2.5 text-center text-sm transition-all shadow-sm text-slate-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-4 h-4">
+                            <path
+                                d="M48 128c-17.7 0-32 14.3-32 32s14.3 32 32 32l352 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L48 128zm0 192c-17.7 0-32 14.3-32 32s14.3 32 32 32l352 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L48 320z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- result -->
+                <div class="w-full max-w-xs min-w-[200px] mt-2">
+                    <label class="block mb-1 text-sm text-[#96d18d]">
+                        Kết quả
+                    </label>
+                    <div class="relative mt-2">
+                        <input id="result" type="number" placeholder="kết quả..."
+                            class="w-full border[#96d18d] text-[#96d18d] bg-transparent placeholder:text-[#96d18d] text-sm border rounded-md pl-3 pr-20 py-2 transition duration-300 ease focus:outline-none focus:border-[#96d18d] hover:border-[#96d18d] shadow-sm focus:shadow appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <button onclick="getResult('plus')"
+                        class="inline-flex text-[18px] h-12 items-center justify-center rounded-md bg-neutral-950 px-4 font-medium text-neutral-50 transition active:scale-110 ">Cộng</button>
+                    <button onclick="getResult('sub')"
+                        class="inline-flex text-[18px] h-12 items-center justify-center rounded-md bg-neutral-950 px-4 font-medium text-neutral-50 transition active:scale-110 ">Trừ</button>
+                    <button onclick="getResult('multiple')"
+                        class="inline-flex text-[18px] h-12 items-center justify-center rounded-md bg-neutral-950 px-4 font-medium text-neutral-50 transition active:scale-110 ">Nhân</button>
+                    <button onclick="getResult('divide')"
+                        class="inline-flex text-[18px] h-12 items-center justify-center rounded-md bg-neutral-950 px-4 font-medium text-neutral-50 transition active:scale-110 ">Chia</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js" type="text/javascript"></script>
+</body>
+
+</html>
