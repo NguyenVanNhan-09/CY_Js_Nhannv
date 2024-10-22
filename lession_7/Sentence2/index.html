@@ -6,10 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .circle {
+            transition: transform 6s ease;
+        }
+
+        .falling {
+            transform: translateY(100vh);
+        }
+    </style>
+
 </head>
 
 <body>
+    <div class="relative h-[100vh] w-full">
+        <h1 class="text-center text-2xl mb-4">Score: <span id="score">0</span></h1>
 
+        <div class="circles"></div>
+
+        <!-- Bin (drop target) -->
+        <div id="bin" class="bin absolute bottom-0 bg-white z-20 left-1/2 transform -translate-x-1/2">
+            <svg width="120px" height="120px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0h48v48H0z" fill="none" />
+                <g id="Shopicon">
+                    <path
+                        d="M6.595,42.22h34.81V18.314H44v-12H4v12h2.595V42.22z M37.595,38.409h-27.19V18.314h27.19V38.409z M8,10.314h32v4H8V10.314z" />
+                    <rect x="17.115" y="23.43" width="13.77" height="3.77" />
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <script src="./assets/js/main.js"></script>
 </body>
 
 </html>
